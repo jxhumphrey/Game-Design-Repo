@@ -50,7 +50,6 @@ ScriptedImporter:
     flipbookRows: 0
     flipbookColumns: 0
     ignorePngGamma: 0
-    cookieMode: 0
     filterMode: 1
     aniso: 1
     mipBias: 0
@@ -6865,7 +6864,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: 00000000000000000000000000000000
+    spriteID: 9adcecc578291de4da71d9255a5b4fd1
     layerID: 432
     mosaicPosition: {x: 0, y: 0}
     flatten: 0
