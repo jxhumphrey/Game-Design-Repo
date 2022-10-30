@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 14.55, y: -6.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,10 +44,12 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -69,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 616639249
-  m_SortingLayer: 0
+  m_SortingLayer: 2
   m_SortingOrder: 10
   m_Sprite: {fileID: -733595645266528400, guid: 1bead99fff13e024a8189bf62eb86b04,
     type: 3}
@@ -110,7 +113,8 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -10.0199995, y: 5.18}
       - {x: -10.0199995, y: -5.14}
-      - {x: 10.0199995, y: -5.14}
-      - {x: 9.965653, y: -1.2682476}
+      - {x: 29.840302, y: -7.8239994}
+      - {x: 32.366726, y: 6.267598}
+      - {x: 18.11362, y: 2.6322103}
       - {x: 1.8031645, y: 2.8386717}
       - {x: 1.7791319, y: 5.125653}
