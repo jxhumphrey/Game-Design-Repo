@@ -100,9 +100,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 1092
-      width: 753
-      height: 206
-    spriteID: 832789fbb5d747b4b9eb6639bd052dcb
+      width: 1370
+      height: 604
+    spriteID: 53251c03586322440b13e7ee00aa968d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -111,7 +111,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -580, y: 656}
+    uvTransform: {x: -193, y: 793}
   - name: BG
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -167,8 +167,8 @@ ScriptedImporter:
     spriteName: Logo
     isGroup: 0
     parentIndex: -1
-    spriteID: 832789fbb5d747b4b9eb6639bd052dcb
-    layerID: 179
+    spriteID: 53251c03586322440b13e7ee00aa968d
+    layerID: 183
     mosaicPosition: {x: 4, y: 1092}
     flatten: 0
     isImported: 1
