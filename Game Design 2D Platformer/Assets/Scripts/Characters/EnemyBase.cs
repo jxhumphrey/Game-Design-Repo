@@ -94,6 +94,7 @@ public class EnemyBase : MonoBehaviour
 
         NewPlayer.Instance.cameraEffects.Shake(200, 1);
         health = 0;
+        //Set timer for deathParticles
         deathParticles.SetActive(true);
         deathParticles.transform.parent = transform.parent;
         instantiator.InstantiateObjects();
