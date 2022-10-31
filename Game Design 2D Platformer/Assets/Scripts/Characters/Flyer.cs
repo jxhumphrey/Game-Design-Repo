@@ -25,12 +25,12 @@ public class Flyer : MonoBehaviour
     [SerializeField] private float maxSpeedDeviation;
     [SerializeField] private float easing = 1; //How intense should we ease when changing speed? The higher the number, the less air control!
     private float bombCounter = 0;
-    [SerializeField] private float bombCounterMax = 5; //How many seconds before shooting another bomb?
+    [SerializeField] private float bombCounterMax = 2; //How many seconds before shooting another bomb?
     public float attentionRange; //How far can I see?
     public float lifeSpan; //Keep at zero if you don't want to explode after a certain period of time.
     [System.NonSerialized] public float lifeSpanCounter;
     private bool sawPlayer = false; //Have I seen the player?
-    [SerializeField] private float speedMultiplier; 
+    [SerializeField] private float speedMultiplier;
     [System.NonSerialized] public Vector3 speed;
     [System.NonSerialized] public Vector3 speedEased;
     [SerializeField] private bool shootsBomb;
@@ -136,7 +136,7 @@ public class Flyer : MonoBehaviour
         {
             LookAt2D();
         }
-      
+
         if (lifeSpan != 0)
         {
             if (lifeSpanCounter < lifeSpan)
