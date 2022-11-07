@@ -20,6 +20,7 @@ public class Flyer : MonoBehaviour
     private RaycastHit2D rayCastHit;
 
     [Header ("Flight")]
+    [SerializeField] private float maxPositionY; //Flyer should not go past this position
     [SerializeField] private bool avoidGround; //Should I steer away from the ground?
     private Vector3 distanceFromPlayer;
     [SerializeField] private float maxSpeedDeviation;
@@ -42,11 +43,13 @@ public class Flyer : MonoBehaviour
         enemyBase = GetComponent<EnemyBase>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
+        //Bombs are aimed at the Player
         if (enemyBase.isBomb)
         {
             lookAtTarget = NewPlayer.Instance.gameObject.transform;
         }
 
+        speed.y = 0.5f;
         speedMultiplier += Random.Range(-maxSpeedDeviation, maxSpeedDeviation);
     }
 
@@ -60,16 +63,34 @@ public class Flyer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      //Set inital speed
+      //Slow down if gets too far from player? Would give "losers" a break?
+
+        if(transform.position.y >= maxPositionY)
+        {
+          speed.y = -0.5f;
+        }
+
         distanceFromPlayer.x = (NewPlayer.Instance.transform.position.x + targetOffset.x) - transform.position.x;
         distanceFromPlayer.y = (NewPlayer.Instance.transform.position.y + targetOffset.y) - transform.position.y;
         speedEased += (speed - speedEased) * Time.deltaTime * easing;
         transform.position += speedEased * Time.deltaTime;
 
+        if (distanceFromPlayer.x > attentionRange)
+        {
+          speed.x = 1;
+        }
+        else {
+          speed.x = 6;
+        }
+
+        //Needs work: bombs shoot in static trajectory when speed calculation is changed
+        //If player in attentionRange, start shooting bombs
         if (Mathf.Abs(distanceFromPlayer.x) <= attentionRange && Mathf.Abs(distanceFromPlayer.y) <= attentionRange || lookAtTarget != null)
         {
             sawPlayer = true;
-            speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
-            speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
+            //speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
+            //speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
 
             if (!NewPlayer.Instance.frozen)
             {
@@ -91,6 +112,9 @@ public class Flyer : MonoBehaviour
                 speedEased = Vector3.zero;
             }
         }
+
+        //If player is outside of attention range (which in our case, he will technically never be) then stand still
+        /**
         else
         {
             speed = Vector2.zero;
@@ -100,6 +124,7 @@ public class Flyer : MonoBehaviour
             }
 
         }
+        */
 
         // Check for walls and ground
         if (avoidGround)
@@ -107,12 +132,29 @@ public class Flyer : MonoBehaviour
             rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.right, rayCastWidth, layerMask);
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.right * rayCastWidth, Color.yellow);
 
+            //If object is blocking path to the right, start moving up?
             if (rayCastHit.collider != null)
+
             {
-                speed.x = -(Mathf.Abs(speed.x));
+                //speed.x = -(Mathf.Abs(speed.x));
+                speed.y = 4;
 
             }
 
+            //If object is blocking path down
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.down, rayCastWidth, layerMask);
+            Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.down * rayCastWidth, Color.red);
+
+            if (rayCastHit.collider != null)
+            {
+                //Dynamically generated to avoid obstacle
+                speed.y = 1;
+                //speed.y = Mathf.Abs(speed.x);
+
+            }
+
+            //If object is blocking path to the left (may not need as is moving to constantly to the right)
+            /*
             rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.left, rayCastWidth, layerMask);
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.left * rayCastWidth, Color.blue);
 
@@ -121,15 +163,7 @@ public class Flyer : MonoBehaviour
                 speed.x = Mathf.Abs(speed.x);
 
             }
-
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.down, rayCastWidth, layerMask);
-            Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.down * rayCastWidth, Color.red);
-
-            if (rayCastHit.collider != null)
-            {
-                speed.y = Mathf.Abs(speed.x);
-
-            }
+            */
         }
 
         if (lookAtTarget != null)
