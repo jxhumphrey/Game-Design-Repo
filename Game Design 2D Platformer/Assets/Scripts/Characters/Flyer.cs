@@ -1,11 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /*The functionality for flying enemies*/
-
-public class Flyer : MonoBehaviour
-{
+public class Flyer : MonoBehaviour {
 
     [Header ("References")]
     private Rigidbody2D rigidbody2D;
@@ -15,9 +13,12 @@ public class Flyer : MonoBehaviour
 
     [Header ("Ground Avoidance")]
     [SerializeField] private float rayCastWidth = 5;
+    [SerializeField] private float rayCastOffsetX = 1;
     [SerializeField] private float rayCastOffsetY = 1;
     [SerializeField] private LayerMask layerMask; //What will I be looking to avoid?
     private RaycastHit2D rayCastHit;
+    private float distanceFromRightWall;
+    private float distanceFromGround;
 
     [Header ("Flight")]
     [SerializeField] private float maxPositionY; //Flyer should not go past this position
@@ -27,6 +28,8 @@ public class Flyer : MonoBehaviour
     [SerializeField] private float easing = 1; //How intense should we ease when changing speed? The higher the number, the less air control!
     private float bombCounter = 0;
     [SerializeField] private float bombCounterMax = 2; //How many seconds before shooting another bomb?
+    [SerializeField] private float bombCounterMaxCoinDecrement; //After how many coins will the Flyer shoot more frequently?
+    [SerializeField] private float bombCounterMaxCoinDecrementAmount; //How much should bombCounterMax decrease after set amount of coins collected?
     public float attentionRange; //How far can I see?
     public float lifeSpan; //Keep at zero if you don't want to explode after a certain period of time.
     [System.NonSerialized] public float lifeSpanCounter;
@@ -38,150 +41,103 @@ public class Flyer : MonoBehaviour
     [SerializeField] private Vector2 targetOffset = new Vector2(0, 2);
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         enemyBase = GetComponent<EnemyBase>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
-        //Bombs are aimed at the Player
-        if (enemyBase.isBomb)
-        {
+        //Player is set as the target
+        if (enemyBase.isBomb) {
             lookAtTarget = NewPlayer.Instance.gameObject.transform;
         }
+        speed.x = 6;
+        speed.y = 2;
 
-        speed.y = 0.5f;
         speedMultiplier += Random.Range(-maxSpeedDeviation, maxSpeedDeviation);
     }
 
-    void OnDrawGizmosSelected()
-    {
+    void OnDrawGizmosSelected() {
         // Draw a yellow sphere at the transform's position indicating the attentionRange
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attentionRange);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-      //Set inital speed
-      //Slow down if gets too far from player? Would give "losers" a break?
+    void Update() {
+      distanceFromPlayer.x = (NewPlayer.Instance.transform.position.x + targetOffset.x) - transform.position.x;
+      distanceFromPlayer.y = (NewPlayer.Instance.transform.position.y + targetOffset.y) - transform.position.y;
+      speedEased += (speed - speedEased) * Time.deltaTime * easing;
+      transform.position += speedEased * Time.deltaTime;
 
-        if(transform.position.y >= maxPositionY)
-        {
-          speed.y = -0.5f;
+      if (enemyBase.isBomb) {
+        speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
+        speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
+      } else {
+        if(NewPlayer.Instance.coins % bombCounterMaxCoinDecrement == 0 && NewPlayer.Instance.coins != 0 && bombCounterMax != 1) {
+          bombCounterMax -= bombCounterMaxCoinDecrementAmount;
         }
 
-        distanceFromPlayer.x = (NewPlayer.Instance.transform.position.x + targetOffset.x) - transform.position.x;
-        distanceFromPlayer.y = (NewPlayer.Instance.transform.position.y + targetOffset.y) - transform.position.y;
-        speedEased += (speed - speedEased) * Time.deltaTime * easing;
-        transform.position += speedEased * Time.deltaTime;
+        if (transform.position.y >= maxPositionY) { speed.y = -speed.y; }
 
-        if (distanceFromPlayer.x > attentionRange)
-        {
-          speed.x = 1;
+        if (Mathf.Abs(distanceFromPlayer.x) <= attentionRange && Mathf.Abs(distanceFromPlayer.y) <= attentionRange || lookAtTarget != null) {
+              sawPlayer = true;
+              speed.x = 6;
+
+              if (!NewPlayer.Instance.frozen) {
+                  if (shootsBomb) {
+                      if (bombCounter > bombCounterMax) {
+                          ShootBomb();
+                          bombCounter = 0;
+                      } else {
+                          bombCounter += Time.deltaTime;
+                      }
+                  }
+              } else {
+                  speedEased = Vector3.zero;
+              }
+        } else {
+          speed.x = 3;
         }
-        else {
-          speed.x = 6;
-        }
 
-        //Needs work: bombs shoot in static trajectory when speed calculation is changed
-        //If player in attentionRange, start shooting bombs
-        if (Mathf.Abs(distanceFromPlayer.x) <= attentionRange && Mathf.Abs(distanceFromPlayer.y) <= attentionRange || lookAtTarget != null)
-        {
-            sawPlayer = true;
-            //speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
-            //speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
+        // Check for walls and ground, adjust speed so always same distance away from groud/walls
+        if (avoidGround) {
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right, rayCastWidth, layerMask);
+            Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.right * rayCastWidth, Color.yellow, 10f);
 
-            if (!NewPlayer.Instance.frozen)
-            {
-                if (shootsBomb)
-                {
-                    if (bombCounter > bombCounterMax)
-                    {
-                        ShootBomb();
-                        bombCounter = 0;
-                    }
-                    else
-                    {
-                        bombCounter += Time.deltaTime;
-                    }
-                }
+            //If object is blocking path to the right
+            if (rayCastHit.collider != null) {
+                //distanceFromRightWall = rayCastHit.distance;
+                speed.x = speed.x / 2;
+                //speed.x = -Mathf.Abs(speed.x);
             }
-            else
-            {
-                speedEased = Vector3.zero;
-            }
-        }
-
-        //If player is outside of attention range (which in our case, he will technically never be) then stand still
-        /**
-        else
-        {
-            speed = Vector2.zero;
-            if (transform.position.y > (NewPlayer.Instance.transform.position.y + targetOffset.y) && sawPlayer)
-            {
-                speed = new Vector2(0f, -.05f);
-            }
-
-        }
-        */
-
-        // Check for walls and ground
-        if (avoidGround)
-        {
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.right, rayCastWidth, layerMask);
-            Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.right * rayCastWidth, Color.yellow);
-
-            //If object is blocking path to the right, start moving up?
-            if (rayCastHit.collider != null)
-
-            {
-                //speed.x = -(Mathf.Abs(speed.x));
-                speed.y = 4;
-
-            }
-
             //If object is blocking path down
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.down, rayCastWidth, layerMask);
-            Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.down * rayCastWidth, Color.red);
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, rayCastWidth, layerMask);
+            Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.down * rayCastWidth, Color.red, 10f);
 
-            if (rayCastHit.collider != null)
-            {
-                //Dynamically generated to avoid obstacle
-                speed.y = 1;
-                //speed.y = Mathf.Abs(speed.x);
-
+            if (rayCastHit.collider != null) {
+                speed.y = Mathf.Abs(speed.x);
             }
 
             //If object is blocking path to the left (may not need as is moving to constantly to the right)
-            /*
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.left, rayCastWidth, layerMask);
-            Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + rayCastOffsetY), Vector2.left * rayCastWidth, Color.blue);
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.left, rayCastWidth, layerMask);
+            Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.left * rayCastWidth, Color.blue, 10f);
 
-            if (rayCastHit.collider != null)
-            {
+            if (rayCastHit.collider != null) {
                 speed.x = Mathf.Abs(speed.x);
-
             }
-            */
         }
 
-        if (lookAtTarget != null)
-        {
+        if (lookAtTarget != null) {
             LookAt2D();
         }
 
-        if (lifeSpan != 0)
-        {
-            if (lifeSpanCounter < lifeSpan)
-            {
+        if (lifeSpan != 0) {
+            if (lifeSpanCounter < lifeSpan) {
                 lifeSpanCounter += Time.deltaTime;
-            }
-            else
-            {
+            } else {
                 enemyBase.Die();
             }
         }
+      }
     }
 
     void LookAt2D()
