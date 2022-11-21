@@ -9170,7 +9170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4589970003040000, guid: eafa658dc579340ccb74ef473f37b5dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4589970003040000, guid: eafa658dc579340ccb74ef473f37b5dd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9237,17 +9237,17 @@ PrefabInstance:
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
       propertyPath: maxPositionY
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
       propertyPath: attentionRange
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
       propertyPath: bombCounterMax
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}

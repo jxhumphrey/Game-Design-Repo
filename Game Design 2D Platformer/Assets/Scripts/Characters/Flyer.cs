@@ -72,7 +72,7 @@ public class Flyer : MonoBehaviour {
         speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
         speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
       } else {
-        if(NewPlayer.Instance.coins % bombCounterMaxCoinDecrement == 0 && NewPlayer.Instance.coins != 0 && bombCounterMax != 1) {
+        if(NewPlayer.Instance.coins != 0 && NewPlayer.Instance.coins % 8 == 0 && bombCounterMax != 2) {
           bombCounterMax -= bombCounterMaxCoinDecrementAmount;
         }
 
@@ -109,7 +109,6 @@ public class Flyer : MonoBehaviour {
             if (rayCastHit.collider != null) {
                 //distanceFromRightWall = rayCastHit.distance;
                 speed.x = speed.x / 2;
-                //speed.x = -Mathf.Abs(speed.x);
             }
             //If object is blocking path down
             rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, rayCastWidth, layerMask);
@@ -142,14 +141,12 @@ public class Flyer : MonoBehaviour {
       }
     }
 
-    void LookAt2D()
-    {
+    void LookAt2D() {
         float angle = Mathf.Atan2(speedEased.y, speedEased.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
     }
 
-    public void ShootBomb()
-    {
+    public void ShootBomb() {
         GameObject bombClone;
         bombClone = Instantiate(bomb, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity, null);
     }

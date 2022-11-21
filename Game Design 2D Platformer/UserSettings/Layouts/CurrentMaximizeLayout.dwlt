@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 4780
+  controlID: 11229
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 4781
+  controlID: 11230
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 4782
+  controlID: 11231
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -189,8 +189,8 @@ MonoBehaviour:
     y: 0
     width: 285.5
     height: 485.5
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -227,10 +227,10 @@ MonoBehaviour:
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 1056}
+      scrollPos: {x: 0, y: 1136}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: c0d9ffffe8d9fffff6d9ffff1cdaffff98e8ffffc2ecffffeaecffff1eedffff12fbffff
+      m_ExpandedIDs: 5e13ffff6413ffff8613ffffba13fffffa21ffffa834fffffc34ffffe837ffff3238ffff7438ffffbe38ffffc0d9ffffc6d9ffffe8d9fffff6d9ffff1cdaffff98e8ffffc2ecffffeaecffff1eedffff12fbffff3e4401005044010074440100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -529,9 +529,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -11.361598, y: 7.5510683, z: -9.953598}
+    m_Target: {x: -41.650524, y: -0.513364, z: 12.487746}
     speed: 2
-    m_Value: {x: -11.361598, y: 7.5510683, z: -9.953598}
+    m_Value: {x: -41.650524, y: -0.513364, z: 12.487746}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -582,9 +582,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 29.73841
+    m_Target: 13.812996
     speed: 2
-    m_Value: 29.73841
+    m_Value: 13.812996
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -678,23 +678,23 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Characters
+    - Assets/Scripts/Interaction
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Characters
+  - Assets/Scripts/Interaction
   m_LastFoldersGridSize: -1
   m_LastProjectPath: /Users/Augmdc 1/Documents/GitHub/Game-Design-Repo/Game Design
     2D Platformer
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 308.49652}
-    m_SelectedIDs: a0630000
-    m_LastClickedID: 25504
-    m_ExpandedIDs: 000000005a6300005c6300005e630000606300006263000000ca9a3b
+    scrollPos: {x: 0, y: 411.5005}
+    m_SelectedIDs: a4630000
+    m_LastClickedID: 25508
+    m_ExpandedIDs: 000000005a6300005c6300005e630000626300007a63000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -722,7 +722,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000005a6300005c6300005e630000606300006263000000ca9a3b
+    m_ExpandedIDs: 000000005a6300005c6300005e630000626300007a63000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -747,9 +747,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 0c1bffff
+    m_LastClickedInstanceID: -58612
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000b471000064750000d06600003a5b000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -868,7 +868,7 @@ MonoBehaviour:
     m_CachedPref: 316
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: -58612
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 1
