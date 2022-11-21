@@ -85,10 +85,8 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    public void Die()
-    {
-        if (NewPlayer.Instance.pounding)
-        {
+    public void Die() {
+        if (NewPlayer.Instance.pounding) {
             NewPlayer.Instance.PoundEffect();
         }
 

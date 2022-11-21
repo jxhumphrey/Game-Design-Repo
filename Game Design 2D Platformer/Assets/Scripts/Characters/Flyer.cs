@@ -76,7 +76,9 @@ public class Flyer : MonoBehaviour {
           bombCounterMax -= bombCounterMaxCoinDecrementAmount;
         }
 
-        if (transform.position.y >= maxPositionY) { speed.y = -speed.y; }
+        if (transform.position.y >= maxPositionY) {
+          speed.y = -2;
+        }
 
         if (Mathf.Abs(distanceFromPlayer.x) <= attentionRange && Mathf.Abs(distanceFromPlayer.y) <= attentionRange || lookAtTarget != null) {
               sawPlayer = true;
