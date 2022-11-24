@@ -71,8 +71,7 @@ public class EnemyBase : MonoBehaviour
                     walker.direction = walker.directionSmooth;
                 }
 
-                if (GetComponent<Flyer>() != null)
-                {
+                if (GetComponent<Flyer>() != null) {
                     Flyer flyer = GetComponent<Flyer>();
                     flyer.speedEased.x = launchDirection * 5;
                     flyer.speedEased.y = 4;
@@ -98,5 +97,9 @@ public class EnemyBase : MonoBehaviour
         instantiator.InstantiateObjects();
         Time.timeScale = 1f;
         Destroy(gameObject);
+
+        if (GetComponent<Flyer>() != null) {
+            //Show Good Job, and return to screen
+        }
     }
 }
