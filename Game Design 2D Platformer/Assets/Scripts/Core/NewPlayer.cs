@@ -42,7 +42,7 @@ public class NewPlayer : PhysicsObject
     private float fallForgivenessCounter; //Counts how long the player has fallen off a ledge
     [SerializeField] private float fallForgiveness = .2f; //How long the player can fall from a ledge and still jump
     [System.NonSerialized] public string groundType = "grass";
-    [System.NonSerialized] public RaycastHit2D ground; 
+    [System.NonSerialized] public RaycastHit2D ground;
     [SerializeField] Vector2 hurtLaunchPower; //How much force should be applied to the player when getting hurt?
     private float launch; //The float added to x and y moveSpeed. This is set with hurtLaunchPower, and is always brought back to zero
     [SerializeField] private float launchRecovery; //How slow should recovering from the launch be? (Higher the number, the longer the launch will last)
@@ -85,7 +85,7 @@ public class NewPlayer : PhysicsObject
         animatorFunctions = GetComponent<AnimatorFunctions>();
         origLocalScale = transform.localScale;
         recoveryCounter = GetComponent<RecoveryCounter>();
-        
+
         //Find all sprites so we can hide them when the player dies.
         graphicSprites = GetComponentsInChildren<SpriteRenderer>();
 
@@ -133,7 +133,7 @@ public class NewPlayer : PhysicsObject
             }
 
             //Punch
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Return))
             {
                 animator.SetTrigger("attack");
                 Shoot(false);
@@ -427,7 +427,7 @@ public class NewPlayer : PhysicsObject
 
     public void SetUpCheatItems()
     {
-        //Allows us to get various items immediately after hitting play, allowing for testing. 
+        //Allows us to get various items immediately after hitting play, allowing for testing.
         for (int i = 0; i < cheatItems.Length; i++)
         {
             GameManager.Instance.GetInventoryItem(cheatItems[i], null);
