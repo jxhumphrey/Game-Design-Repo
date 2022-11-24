@@ -72,7 +72,7 @@ public class Flyer : MonoBehaviour {
         speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
         speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
       } else {
-        if(NewPlayer.Instance.coins != 0 && NewPlayer.Instance.coins % 8 == 0 && bombCounterMax != 2) {
+        if(NewPlayer.Instance.coins != 0 && NewPlayer.Instance.coins % 10 == 0 && bombCounterMax != 2) {
           bombCounterMax -= bombCounterMaxCoinDecrementAmount;
         }
 
@@ -115,7 +115,7 @@ public class Flyer : MonoBehaviour {
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.down * rayCastWidth, Color.red, 10f);
 
             if (rayCastHit.collider != null) {
-                speed.y = Mathf.Abs(speed.x);
+                speed.y = Mathf.Abs(speed.x) * 1.1f;
             }
 
             //If object is blocking path to the left (may not need as is moving to constantly to the right)
