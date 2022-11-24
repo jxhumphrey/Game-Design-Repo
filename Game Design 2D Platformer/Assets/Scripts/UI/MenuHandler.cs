@@ -16,6 +16,6 @@ public class MenuHandler : MonoBehaviour {
 
     public void LoadScene()
     {
-        SceneManager.LoadScene(whichScene);
+			SceneManager.LoadScene(whichScene);
     }
 }
