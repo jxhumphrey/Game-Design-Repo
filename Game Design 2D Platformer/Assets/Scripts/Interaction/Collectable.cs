@@ -47,7 +47,7 @@ public class Collectable : MonoBehaviour
         else if (itemType == ItemType.Coin)
         {
             NewPlayer.Instance.coins += itemAmount;
-            NewPlayer.Instance.maxSpeed += 0.05f;
+            NewPlayer.Instance.maxSpeed += 0.025f;
         }
         else if (itemType == ItemType.Health) {
             if (NewPlayer.Instance.health < NewPlayer.Instance.maxHealth)
