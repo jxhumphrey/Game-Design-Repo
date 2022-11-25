@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*Attach this to any collectable. When it is instantiated from a broken box or dead enemy, 
+/*Attach this to any collectable. When it is instantiated from a broken box or dead enemy,
 it will launch. This script also ensures the collectable's trigger is disabled for
 a brief period so the player doesn't immediately collect it after instantiation, not knowing what he collected.
 */
@@ -14,7 +14,7 @@ public class Ejector : MonoBehaviour
     [SerializeField] private BoxCollider2D collectableTrigger;
     private float counter; //Counts to a value, and then allows the collectable can be collected
     public bool launchOnStart;
-    private Vector2 launchPower = new Vector2(300,300);
+    private Vector2 launchPower = new Vector2(150,150);
     private Rigidbody2D rb;
 
     // Use this for initialization

@@ -35,6 +35,7 @@ public class Flyer : MonoBehaviour {
     [System.NonSerialized] public float lifeSpanCounter;
     private bool sawPlayer = false; //Have I seen the player?
     [SerializeField] private float speedMultiplier;
+    [SerializeField] private float speedMultiplierHealth = 1;
     [System.NonSerialized] public Vector3 speed;
     [System.NonSerialized] public Vector3 speedEased;
     [SerializeField] private bool shootsBomb;
@@ -49,7 +50,7 @@ public class Flyer : MonoBehaviour {
         if (enemyBase.isBomb) {
             lookAtTarget = NewPlayer.Instance.gameObject.transform;
         }
-        speed.x = 6;
+        //speed.x = 0.5f * speedMultiplierHealth;
         speed.y = 2;
 
         speedMultiplier += Random.Range(-maxSpeedDeviation, maxSpeedDeviation);
@@ -76,13 +77,21 @@ public class Flyer : MonoBehaviour {
           bombCounterMax -= bombCounterMaxCoinDecrementAmount;
         }
 
+        //Speed up the boss when he is at lower health
+        if(enemyBase.health == 2) {
+          speedMultiplierHealth = 1.2f;
+        }
+        if(enemyBase.health == 1) {
+          speedMultiplierHealth = 1.4f;
+        }
+
         if (transform.position.y >= maxPositionY) {
           speed.y = -2;
         }
 
         if (Mathf.Abs(distanceFromPlayer.x) <= attentionRange && Mathf.Abs(distanceFromPlayer.y) <= attentionRange || lookAtTarget != null) {
               sawPlayer = true;
-              speed.x = 6;
+              speed.x = 6 * speedMultiplierHealth;
 
               if (!NewPlayer.Instance.frozen) {
                   if (shootsBomb) {
@@ -97,7 +106,7 @@ public class Flyer : MonoBehaviour {
                   speedEased = Vector3.zero;
               }
         } else {
-          speed.x = 3;
+          speed.x = 3 * speedMultiplierHealth;
         }
 
         // Check for walls and ground, adjust speed so always same distance away from groud/walls
@@ -108,7 +117,7 @@ public class Flyer : MonoBehaviour {
             //If object is blocking path to the right
             if (rayCastHit.collider != null) {
                 //distanceFromRightWall = rayCastHit.distance;
-                speed.x = speed.x / 2;
+                speed.x = (speed.x / 2) * speedMultiplierHealth;
             }
             //If object is blocking path down
             rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, rayCastWidth, layerMask);
@@ -123,7 +132,7 @@ public class Flyer : MonoBehaviour {
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.left * rayCastWidth, Color.blue, 10f);
 
             if (rayCastHit.collider != null) {
-                speed.x = Mathf.Abs(speed.x);
+                speed.x = Mathf.Abs(speed.x) * speedMultiplierHealth;
             }
         }
 
