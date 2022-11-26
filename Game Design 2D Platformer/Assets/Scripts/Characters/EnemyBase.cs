@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 /*The core functionality of both the EnemyFlyer and the EnemyWalker*/
 
@@ -21,6 +23,7 @@ public class EnemyBase : MonoBehaviour
     public AudioClip hitSound;
     public bool isBomb;
     [SerializeField] bool requirePoundAttack; //Requires the player to use the down attack to hurt
+    [SerializeField] public string whichScene;
 
     void Start()
     {
@@ -97,8 +100,13 @@ public class EnemyBase : MonoBehaviour
         Time.timeScale = 1f;
         Destroy(gameObject);
 
-        if (GetComponent<Flyer>() != null) {
-            //Show Good Job, and return to screen
+        //if (GetComponent<Flyer>() == null) {
+        //    SceneManager.LoadScene(whichScene);
+        //}
+        Flyer flyer = GetComponent<Flyer>();
+        if (flyer.enemyBase.health == 0)
+        {
+            SceneManager.LoadScene(whichScene);
         }
     }
 }
