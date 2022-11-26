@@ -22,6 +22,7 @@ public class Flyer : MonoBehaviour {
 
     [Header ("Flight")]
     [SerializeField] private float maxPositionY; //Flyer should not go past this position
+    [SerializeField] private float maxPositionX;
     [SerializeField] private bool avoidGround; //Should I steer away from the ground?
     private Vector3 distanceFromPlayer;
     [SerializeField] private float maxSpeedDeviation;
@@ -69,7 +70,12 @@ public class Flyer : MonoBehaviour {
       speedEased += (speed - speedEased) * Time.deltaTime * easing;
       transform.position += speedEased * Time.deltaTime;
 
-      if (enemyBase.isBomb) {
+        if (transform.position.x >= maxPositionX)
+        {
+            NewPlayer.Instance.Die();
+        }
+
+        if (enemyBase.isBomb) {
         speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
         speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
       } else {
@@ -89,7 +95,7 @@ public class Flyer : MonoBehaviour {
           speed.y = -2;
         }
 
-        if (Mathf.Abs(distanceFromPlayer.x) <= attentionRange && Mathf.Abs(distanceFromPlayer.y) <= attentionRange || lookAtTarget != null) {
+            if (Mathf.Abs(distanceFromPlayer.x) <= attentionRange && Mathf.Abs(distanceFromPlayer.y) <= attentionRange || lookAtTarget != null) {
               sawPlayer = true;
               speed.x = 6 * speedMultiplierHealth;
 
