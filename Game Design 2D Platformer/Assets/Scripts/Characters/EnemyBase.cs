@@ -104,8 +104,7 @@ public class EnemyBase : MonoBehaviour
         //    SceneManager.LoadScene(whichScene);
         //}
         Flyer flyer = GetComponent<Flyer>();
-        if (flyer.enemyBase.health == 0)
-        {
+        if (flyer.enemyBase.health == 0) {
             SceneManager.LoadScene(whichScene);
         }
     }

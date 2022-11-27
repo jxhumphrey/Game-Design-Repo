@@ -16654,12 +16654,12 @@ PrefabInstance:
     - target: {fileID: 4040967437524821292, guid: 383e5672183668249aae66f23f7daaee,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 271.79
+      value: 271.85
       objectReference: {fileID: 0}
     - target: {fileID: 4040967437524821292, guid: 383e5672183668249aae66f23f7daaee,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.88
+      value: -1.9
       objectReference: {fileID: 0}
     - target: {fileID: 4040967437524821292, guid: 383e5672183668249aae66f23f7daaee,
         type: 3}
@@ -17577,12 +17577,12 @@ PrefabInstance:
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
       propertyPath: attentionRange
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
       propertyPath: bombCounterMax
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
@@ -17592,12 +17592,17 @@ PrefabInstance:
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
       propertyPath: rayCastOffsetY
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
       propertyPath: targetOffset.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
+        type: 3}
+      propertyPath: speedMultiplier
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114184158737853950, guid: eafa658dc579340ccb74ef473f37b5dd,
         type: 3}
@@ -26514,6 +26519,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114653667055612356, guid: b022250573709434c9737ce47e1017e3,
+        type: 3}
+      propertyPath: m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224716503207125252, guid: b022250573709434c9737ce47e1017e3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5433378788908979453, guid: b022250573709434c9737ce47e1017e3,
         type: 3}
       propertyPath: gameMusic
@@ -26524,6 +26539,11 @@ PrefabInstance:
       propertyPath: gameAmbience
       value: 
       objectReference: {fileID: 889098491}
+    - target: {fileID: 6534765328664133638, guid: b022250573709434c9737ce47e1017e3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b022250573709434c9737ce47e1017e3, type: 3}
 --- !u!1001 &8792946416375681314

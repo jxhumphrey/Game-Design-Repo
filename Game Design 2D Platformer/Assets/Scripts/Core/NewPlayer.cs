@@ -273,8 +273,7 @@ public class NewPlayer : PhysicsObject
 
     public IEnumerator Die()
     {
-        if (!frozen)
-        {
+        if (!frozen) {
             dead = true;
             deathParticles.Emit(10);
             GameManager.Instance.audioSource.PlayOneShot(deathSound);
