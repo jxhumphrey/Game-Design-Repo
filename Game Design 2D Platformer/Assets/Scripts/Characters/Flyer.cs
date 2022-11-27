@@ -10,6 +10,7 @@ public class Flyer : MonoBehaviour {
     [SerializeField] private GameObject bomb;
     [System.NonSerialized] public EnemyBase enemyBase;
     private Transform lookAtTarget; //If I'm a bomb, I will point to a transform, like the player
+    [SerializeField] public string whichScene;
 
     [Header ("Ground Avoidance")]
     [SerializeField] private float rayCastWidth = 5;
@@ -65,7 +66,11 @@ public class Flyer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+      if (transform.position.x > maxPositionX) {
+        //End the game
+        //GameManager.Instance.hud.loadSceneName = SceneManager.GetActiveScene().name;
+        //Time.timeScale = 1f;
+      }
 
       distanceFromPlayer.x = (NewPlayer.Instance.transform.position.x + targetOffset.x) - transform.position.x;
       distanceFromPlayer.y = (NewPlayer.Instance.transform.position.y + targetOffset.y) - transform.position.y;
@@ -73,19 +78,19 @@ public class Flyer : MonoBehaviour {
       transform.position += speedEased * Time.deltaTime;
 
         if (enemyBase.isBomb) {
-        speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
-        speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
-      } else {
+          speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
+          speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
+        } else {
         if(NewPlayer.Instance.coins != 0 && NewPlayer.Instance.coins % 10 == 0 && bombCounterMax != 2) {
           bombCounterMax -= bombCounterMaxCoinDecrementAmount;
         }
 
         //Speed up the boss when he is at lower health
         if(enemyBase.health == 2) {
-          speedMultiplierHealth = 1.2f;
+          speedMultiplierHealth = 1.1f;
         }
         if(enemyBase.health == 1) {
-          speedMultiplierHealth = 1.4f;
+          speedMultiplierHealth = 1.2f;
         }
 
         if (transform.position.y >= maxPositionY) {
@@ -94,7 +99,7 @@ public class Flyer : MonoBehaviour {
 
             if (Mathf.Abs(distanceFromPlayer.x) <= attentionRange && Mathf.Abs(distanceFromPlayer.y) <= attentionRange || lookAtTarget != null) {
               sawPlayer = true;
-              speed.x = 6 * speedMultiplierHealth;
+              speed.x = 5.75f * speedMultiplierHealth;
 
               if (!NewPlayer.Instance.frozen) {
                   if (shootsBomb) {
@@ -109,7 +114,7 @@ public class Flyer : MonoBehaviour {
                   speedEased = Vector3.zero;
               }
         } else {
-          speed.x = 3 * speedMultiplierHealth;
+          speed.x = 2.5f * speedMultiplierHealth;
         }
 
         // Check for walls and ground, adjust speed so always same distance away from groud/walls
