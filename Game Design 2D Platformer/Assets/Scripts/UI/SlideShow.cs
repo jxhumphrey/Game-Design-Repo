@@ -24,7 +24,7 @@ public class SlideShow : MonoBehaviour
     }
 
     public void NextSlide(){
-        if(currentSlide == slidelist.transform.childCount){
+        if(currentSlide == slidelist.transform.childCount-1){
             SceneManager.LoadScene(whichScene);
         }
         currentSlide++;
