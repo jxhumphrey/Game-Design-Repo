@@ -63,6 +63,7 @@ public class NewPlayer : PhysicsObject
 
     [Header ("Sounds")]
     public AudioClip deathSound;
+    public AudioClip deathSound2;
     public AudioClip equipSound;
     public AudioClip grassSound;
     public AudioClip hurtSound;
@@ -277,6 +278,7 @@ public class NewPlayer : PhysicsObject
             dead = true;
             deathParticles.Emit(10);
             GameManager.Instance.audioSource.PlayOneShot(deathSound);
+            GameManager.Instance.audioSource.PlayOneShot(deathSound2);
             Hide(true);
             Time.timeScale = .6f;
             yield return new WaitForSeconds(5f);

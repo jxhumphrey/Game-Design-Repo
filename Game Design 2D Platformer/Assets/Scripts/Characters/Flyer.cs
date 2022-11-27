@@ -65,15 +65,12 @@ public class Flyer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+
       distanceFromPlayer.x = (NewPlayer.Instance.transform.position.x + targetOffset.x) - transform.position.x;
       distanceFromPlayer.y = (NewPlayer.Instance.transform.position.y + targetOffset.y) - transform.position.y;
       speedEased += (speed - speedEased) * Time.deltaTime * easing;
       transform.position += speedEased * Time.deltaTime;
-
-        if (transform.position.x >= maxPositionX)
-        {
-            NewPlayer.Instance.Die();
-        }
 
         if (enemyBase.isBomb) {
         speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
