@@ -28,7 +28,6 @@ public class Flyer : MonoBehaviour {
     [SerializeField] private float easing = 1; //How intense should we ease when changing speed? The higher the number, the less air control!
     private float bombCounter = 0;
     [SerializeField] private float bombCounterMax = 2; //How many seconds before shooting another bomb?
-    [SerializeField] private float bombCounterMaxCoinDecrement; //After how many coins will the Flyer shoot more frequently?
     [SerializeField] private float bombCounterMaxCoinDecrementAmount; //How much should bombCounterMax decrease after set amount of coins collected?
     public float attentionRange; //How far can I see?
     public float lifeSpan; //Keep at zero if you don't want to explode after a certain period of time.
@@ -110,7 +109,7 @@ public class Flyer : MonoBehaviour {
 
         // Check for walls and ground, adjust speed so always same distance away from groud/walls
         if (avoidGround) {
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right, rayCastWidth, layerMask);
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x + rayCastOffsetX, transform.position.y + rayCastOffsetY), Vector2.right, rayCastWidth, layerMask);
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.right * rayCastWidth, Color.yellow, 10f);
 
             //If object is blocking path to the right
@@ -118,15 +117,15 @@ public class Flyer : MonoBehaviour {
                 speed.x = (speed.x / 2) * speedMultiplierHealth;
             }
             //If object is blocking path down
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, rayCastWidth, layerMask);
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x + rayCastOffsetX, transform.position.y + rayCastOffsetY), Vector2.down, rayCastWidth, layerMask);
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.down * rayCastWidth, Color.red, 10f);
 
             if (rayCastHit.collider != null) {
-                speed.y = Mathf.Abs(speed.x) * 1.2f;
+                speed.y = Mathf.Abs(speed.x) * 1.3f;
             }
 
             //If object is blocking path to the left (may not need as is moving to constantly to the right)
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.left, rayCastWidth, layerMask);
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x + rayCastOffsetX, transform.position.y + rayCastOffsetY), Vector2.left, rayCastWidth, layerMask);
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.left * rayCastWidth, Color.blue, 10f);
 
             if (rayCastHit.collider != null) {
