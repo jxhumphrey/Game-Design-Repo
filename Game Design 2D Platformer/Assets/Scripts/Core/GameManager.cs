@@ -53,4 +53,6 @@ public class GameManager : MonoBehaviour
         hud.SetInventoryImage(hud.blankUI);
     }
 
+    
+
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /*The functionality for flying enemies*/
 public class Flyer : MonoBehaviour {
@@ -10,6 +11,7 @@ public class Flyer : MonoBehaviour {
     [SerializeField] private GameObject bomb;
     [System.NonSerialized] public EnemyBase enemyBase;
     private Transform lookAtTarget; //If I'm a bomb, I will point to a transform, like the player
+    [SerializeField] public string whichScene;
 
     [Header ("Ground Avoidance")]
     [SerializeField] private float rayCastWidth = 5;
@@ -41,6 +43,7 @@ public class Flyer : MonoBehaviour {
     [System.NonSerialized] public Vector3 speedEased;
     [SerializeField] private bool shootsBomb;
     [SerializeField] private Vector2 targetOffset = new Vector2(0, 2);
+    public GameObject pauseMenu;
 
     // Use this for initialization
     void Start() {
@@ -65,8 +68,7 @@ public class Flyer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-
+    
       distanceFromPlayer.x = (NewPlayer.Instance.transform.position.x + targetOffset.x) - transform.position.x;
       distanceFromPlayer.y = (NewPlayer.Instance.transform.position.y + targetOffset.y) - transform.position.y;
       speedEased += (speed - speedEased) * Time.deltaTime * easing;
@@ -162,4 +164,19 @@ public class Flyer : MonoBehaviour {
         GameObject bombClone;
         bombClone = Instantiate(bomb, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity, null);
     }
+
+    public void OnCollisionEnter2D(Collision2D collision){
+            if(collision.gameObject.tag.Equals("Finish")){
+                StartCoroutine(NewPlayer.Instance.Die());
+                StartCoroutine(waitTime());
+            }
+    }
+
+    IEnumerator waitTime(){
+        yield return new WaitForSeconds(5);
+        pauseMenu.SetActive(true);
+        
+    }
+
+    
 }
