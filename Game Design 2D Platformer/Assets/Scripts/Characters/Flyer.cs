@@ -161,6 +161,7 @@ public class Flyer : MonoBehaviour {
     }
 
     public void OnCollisionEnter2D(Collision2D collision){
+        Debug.Log("Collided");
             if(collision.gameObject.tag.Equals("Finish")){
                 StartCoroutine(NewPlayer.Instance.Die());
                 StartCoroutine(waitTime());
@@ -168,7 +169,7 @@ public class Flyer : MonoBehaviour {
     }
 
     IEnumerator waitTime(){
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         pauseMenu.SetActive(true);
 
     }
