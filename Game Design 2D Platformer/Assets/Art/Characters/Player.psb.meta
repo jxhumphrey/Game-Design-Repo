@@ -50,7 +50,6 @@ ScriptedImporter:
     flipbookRows: 0
     flipbookColumns: 0
     ignorePngGamma: 0
-    cookieMode: 0
     filterMode: 1
     aniso: 1
     mipBias: 0
@@ -102,7 +101,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 973
+      x: 976
       y: 400
       width: 40
       height: 40
@@ -124,7 +123,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 91, y: -961}
+    uvTransform: {x: 94, y: -961}
   - name: EyeR
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -132,7 +131,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 973
+      x: 976
       y: 448
       width: 40
       height: 40
@@ -163,7 +162,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -21, y: -913}
+    uvTransform: {x: -18, y: -913}
   - name: HandR
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -6315,7 +6314,7 @@ ScriptedImporter:
     - {x: 0, y: 26}
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -91, y: -903}
+    uvTransform: {x: -90, y: -902}
   - name: Blast
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -6697,7 +6696,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: 3224c16a251138549807985d100b03c7
     layerID: 478
-    mosaicPosition: {x: 973, y: 400}
+    mosaicPosition: {x: 976, y: 400}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -6707,7 +6706,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: 08e0c39d4fadab241af7bef7ff6b319b
     layerID: 477
-    mosaicPosition: {x: 973, y: 448}
+    mosaicPosition: {x: 976, y: 448}
     flatten: 0
     isImported: 1
     isVisible: 1

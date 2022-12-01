@@ -24,6 +24,7 @@ public class EnemyBase : MonoBehaviour
     public bool isBomb;
     [SerializeField] bool requirePoundAttack; //Requires the player to use the down attack to hurt
     [SerializeField] public string whichScene;
+    [SerializeField] private GameObject winMenu;
 
     void Start()
     {
@@ -75,8 +76,8 @@ public class EnemyBase : MonoBehaviour
 
                 if (GetComponent<Flyer>() != null) {
                     Flyer flyer = GetComponent<Flyer>();
-                    flyer.speedEased.x = launchDirection * 5;
-                    flyer.speedEased.y = 4;
+                    flyer.speedEased.x = launchDirection * 2.5f;
+                    flyer.speedEased.y = 2;
                     flyer.speed.x = flyer.speedEased.x;
                     flyer.speed.y = flyer.speedEased.y;
                 }
@@ -93,6 +94,7 @@ public class EnemyBase : MonoBehaviour
 
         NewPlayer.Instance.cameraEffects.Shake(200, 1);
         health = 0;
+
         //Set timer for deathParticles
         deathParticles.SetActive(true);
         deathParticles.transform.parent = transform.parent;
@@ -100,13 +102,7 @@ public class EnemyBase : MonoBehaviour
         Time.timeScale = 1f;
         Destroy(gameObject);
 
-        //if (GetComponent<Flyer>() == null) {
-        //    SceneManager.LoadScene(whichScene);
-        //}
-        Flyer flyer = GetComponent<Flyer>();
-        if (flyer.enemyBase.health == 0)
-        {
-            SceneManager.LoadScene(whichScene);
-        }
+        if (GetComponent<Flyer>() != null && GetComponent<Flyer>().enemyBase.health == 0) { winMenu.SetActive(true);}
+
     }
 }

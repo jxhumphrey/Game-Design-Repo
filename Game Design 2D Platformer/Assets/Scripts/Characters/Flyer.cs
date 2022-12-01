@@ -19,11 +19,9 @@ public class Flyer : MonoBehaviour {
     [SerializeField] private float rayCastOffsetY = 1;
     [SerializeField] private LayerMask layerMask; //What will I be looking to avoid?
     private RaycastHit2D rayCastHit;
-    private float distanceFromRightWall;
-    private float distanceFromGround;
 
     [Header ("Flight")]
-    [SerializeField] private float maxPositionY; //Flyer should not go past this position
+    [SerializeField] private float maxPositionY; //Flyer should not go past this  Y position
     [SerializeField] private float maxPositionX;
     [SerializeField] private bool avoidGround; //Should I steer away from the ground?
     private Vector3 distanceFromPlayer;
@@ -31,7 +29,6 @@ public class Flyer : MonoBehaviour {
     [SerializeField] private float easing = 1; //How intense should we ease when changing speed? The higher the number, the less air control!
     private float bombCounter = 0;
     [SerializeField] private float bombCounterMax = 2; //How many seconds before shooting another bomb?
-    [SerializeField] private float bombCounterMaxCoinDecrement; //After how many coins will the Flyer shoot more frequently?
     [SerializeField] private float bombCounterMaxCoinDecrementAmount; //How much should bombCounterMax decrease after set amount of coins collected?
     public float attentionRange; //How far can I see?
     public float lifeSpan; //Keep at zero if you don't want to explode after a certain period of time.
@@ -54,9 +51,8 @@ public class Flyer : MonoBehaviour {
         if (enemyBase.isBomb) {
             lookAtTarget = NewPlayer.Instance.gameObject.transform;
         }
-        //speed.x = 0.5f * speedMultiplierHealth;
-        speed.y = 2;
 
+        speed.y = 2;
         speedMultiplier += Random.Range(-maxSpeedDeviation, maxSpeedDeviation);
     }
 
@@ -68,26 +64,26 @@ public class Flyer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-    
+
       distanceFromPlayer.x = (NewPlayer.Instance.transform.position.x + targetOffset.x) - transform.position.x;
       distanceFromPlayer.y = (NewPlayer.Instance.transform.position.y + targetOffset.y) - transform.position.y;
       speedEased += (speed - speedEased) * Time.deltaTime * easing;
       transform.position += speedEased * Time.deltaTime;
 
         if (enemyBase.isBomb) {
-        speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
-        speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
-      } else {
-        if(NewPlayer.Instance.coins != 0 && NewPlayer.Instance.coins % 10 == 0 && bombCounterMax != 2) {
+          speed.x = (Mathf.Abs(distanceFromPlayer.x) / distanceFromPlayer.x) * speedMultiplier;
+          speed.y = (Mathf.Abs(distanceFromPlayer.y) / distanceFromPlayer.y) * speedMultiplier;
+        } else {
+        if(NewPlayer.Instance.coins != 0 && NewPlayer.Instance.coins % 10 == 0 && bombCounterMax != 3) {
           bombCounterMax -= bombCounterMaxCoinDecrementAmount;
         }
 
         //Speed up the boss when he is at lower health
         if(enemyBase.health == 2) {
-          speedMultiplierHealth = 1.2f;
+          speedMultiplierHealth = 1.1f;
         }
         if(enemyBase.health == 1) {
-          speedMultiplierHealth = 1.4f;
+          speedMultiplierHealth = 1.2f;
         }
 
         if (transform.position.y >= maxPositionY) {
@@ -111,29 +107,28 @@ public class Flyer : MonoBehaviour {
                   speedEased = Vector3.zero;
               }
         } else {
-          speed.x = 3 * speedMultiplierHealth;
+          speed.x = 3f * speedMultiplierHealth;
         }
 
         // Check for walls and ground, adjust speed so always same distance away from groud/walls
         if (avoidGround) {
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right, rayCastWidth, layerMask);
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x + rayCastOffsetX, transform.position.y + rayCastOffsetY), Vector2.right, rayCastWidth, layerMask);
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.right * rayCastWidth, Color.yellow, 10f);
 
             //If object is blocking path to the right
             if (rayCastHit.collider != null) {
-                //distanceFromRightWall = rayCastHit.distance;
                 speed.x = (speed.x / 2) * speedMultiplierHealth;
             }
             //If object is blocking path down
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.down, rayCastWidth, layerMask);
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x + rayCastOffsetX, transform.position.y + rayCastOffsetY), Vector2.down, rayCastWidth, layerMask);
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.down * rayCastWidth, Color.red, 10f);
 
             if (rayCastHit.collider != null) {
-                speed.y = Mathf.Abs(speed.x) * 1.1f;
+                speed.y = Mathf.Abs(speed.x) * 1.3f;
             }
 
             //If object is blocking path to the left (may not need as is moving to constantly to the right)
-            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.left, rayCastWidth, layerMask);
+            rayCastHit = Physics2D.Raycast(new Vector2(transform.position.x + rayCastOffsetX, transform.position.y + rayCastOffsetY), Vector2.left, rayCastWidth, layerMask);
             Debug.DrawRay(new Vector2(transform.position.x, transform.position.y), Vector2.left * rayCastWidth, Color.blue, 10f);
 
             if (rayCastHit.collider != null) {
@@ -175,8 +170,8 @@ public class Flyer : MonoBehaviour {
     IEnumerator waitTime(){
         yield return new WaitForSeconds(5);
         pauseMenu.SetActive(true);
-        
+
     }
 
-    
+
 }
