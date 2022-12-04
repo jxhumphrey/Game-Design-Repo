@@ -169,7 +169,7 @@ public class Flyer : MonoBehaviour {
     }
 
     IEnumerator waitTime(){
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         pauseMenu.SetActive(true);
 
     }
