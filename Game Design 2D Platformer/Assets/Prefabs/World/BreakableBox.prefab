@@ -5206,7 +5206,7 @@ MonoBehaviour:
   brokenSprite: {fileID: 0}
   deathParticles: {fileID: 1684709457783108}
   destroyAfterDeath: 1
-  health: 3
+  health: 2
   instantiator: {fileID: 114151467440667452}
   hitSound: {fileID: 8300000, guid: def22ce97dc3f41bda43f7520ec1bb2d, type: 3}
   recoveryCounter: {fileID: 0}
@@ -5225,7 +5225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 1242977877433484, guid: ce1bbe003f390412a80f34448b33c93c, type: 3}
-  amount: 2
+  amount: 1
 --- !u!114 &3255622937140606741
 MonoBehaviour:
   m_ObjectHideFlags: 0
