@@ -80,10 +80,10 @@ public class Flyer : MonoBehaviour {
 
         //Speed up the boss when he is at lower health
         if(enemyBase.health == 2) {
-          speedMultiplierHealth = 1.1f;
+          speedMultiplierHealth = 1.15f;
         }
         if(enemyBase.health == 1) {
-          speedMultiplierHealth = 1.2f;
+          speedMultiplierHealth = 1.3f;
         }
 
         if (transform.position.y >= maxPositionY) {
